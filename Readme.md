@@ -13,7 +13,7 @@ Pour importer la base de données dans WampServer via l'interface graphique :
 
 3. **Importer le Fichier SQL** :  
    - Cliquez sur l'onglet **"Importer"**.
-   - Sélectionnez le fichier `.sql` à partir de votre système de fichiers.
+   - Sélectionnez le fichier `.sql` à partir de votre système de fichiers.(j'ai mis un fichier sql dans ce repo, formdyn.sql)
    - Cliquez sur **"Exécuter"** pour importer la base de données.
 
 ## 2. Démarrer le Serveur Symfony
