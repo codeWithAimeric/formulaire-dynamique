@@ -6,6 +6,7 @@ use App\Entity\Form;
 use App\Entity\Info;
 use App\Form\FormType;
 use App\Repository\FormRepository;
+use App\Repository\InfoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,17 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class FormController extends AbstractController
 {
+
+    #[Route('/forms', name: 'form_list')]
+    public function list(Request $request, FormRepository $formRepository): Response
+    {
+        $pagination = $formRepository->findAllPaginated($request);
+
+        return $this->render('form/list.html.twig', [
+            'pagination' => $pagination,
+        ]);
+    }
+
     #[Route('/', name: 'form_new')]
     public function new(Request $request,EntityManagerInterface $em, FormRepository $formRepository): Response
     {
@@ -63,6 +75,16 @@ class FormController extends AbstractController
 
         return $this->render('form/show.html.twig', [
             'form' => $formEntity,
+        ]);
+    }
+
+    #[Route('/form-info', name: 'form_info')]
+    public function info(Request $request, InfoRepository $infoRepository): Response
+    {
+        $pagination = $infoRepository->findAllGroupedByFormId($request);
+        
+        return $this->render('form/info.html.twig', [
+            'pagination' => $pagination,
         ]);
     }
 }

@@ -15,7 +15,7 @@ class FormType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Form Name',
+                'label' => 'Nom du formulaire',
             ])
             ->add('fields', CollectionType::class, [
                 'entry_type' => FormFieldType::class,

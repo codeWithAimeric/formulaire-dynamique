@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Liste des informations</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Form ID</th>
+                <th>Field Label</th>
+                <th>Field Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set currentFormId = null %}
+            {% for info in pagination %}
+                {% if currentFormId != info.formId %}
+                    {% if not loop.first %}
+                        </tbody>
+                    {% endif %}
+                    <tbody>
+                    <tr>
+                        <td colspan="4" class="table-secondary text-center">Form ID: {{ info.formId }}</td>
+                    </tr>
+                    {% set currentFormId = info.formId %}
+                {% endif %}
+                <tr>
+                    <td>{{ info.id }}</td>
+                    <td>{{ info.formId }}</td>
+                    <td>{{ info.fieldLabel }}</td>
+                    <td>{{ info.fieldValue }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination justify-content-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+</div>
+{% endblock %}

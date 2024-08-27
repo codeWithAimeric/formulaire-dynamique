@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Liste des Formulaires</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom du Formulaire</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for form in pagination %}
+                <tr>
+                    <td>{{ form.id }}</td>
+                    <td>{{ form.name }}</td>
+                    <td>
+                        <a href="{{ path('form_show', {'id': form.id}) }}" class="btn btn-primary btn-sm">Voir page</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination justify-content-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+</div>
+{% endblock %}
