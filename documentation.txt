@@ -1,0 +1,9 @@
+Choix techniques : 
+-utilisation d'un lien CDN pour implémenter Bootstrap puisqu'il s'agit juste d'un petit projet, donc c'est préférable au lieu d'utiliser webpack encore et de l'installer via npm
+-utilisation de knp paginator : ce bundle facilite la mise en place d'une pagination lors des requêtes qui le nécessite
+
+Fonctionnalités implémentées : 
+-création d'une page pour sélectionner les champs de formulaire que l'on souhaite créer
+-création des formulaires dans une nouvelle page
+-les données saisies sur chaque formulaires créées sont stockées en base et afficher dans une page sous forme de tableau
+-lister les pages créées dans une nouvelle page et pouvoir y naviguer dessus
