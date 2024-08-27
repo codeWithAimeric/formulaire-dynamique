@@ -18,7 +18,7 @@ class FormFieldType extends AbstractType
         $builder
         ->add('label', TextType::class, [
             'label' => 'Label',
-            'attr' => ['class' => 'form-control mb-2'],  // Ajout de classes Bootstrap
+            'attr' => ['class' => 'form-control mb-2'],  
         ])
         ->add('type', ChoiceType::class, [
             'label' => 'Type',
@@ -28,7 +28,7 @@ class FormFieldType extends AbstractType
                 'Date' => 'date',
                 'Number' => 'number',
             ],
-            'attr' => ['class' => 'form-select mb-2'],  // Ajout de classes Bootstrap
+            'attr' => ['class' => 'form-select mb-2'], 
         ]);
     }
 

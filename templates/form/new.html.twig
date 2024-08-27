@@ -3,7 +3,7 @@
 {% block body %}
 <div class="container d-flex justify-content-center align-items-center">
     <div class="col-md-8">
-        <h1 class="text-center mb-4">Creation nouveau formulaire</h1>
+        <h1 class="text-center mb-4">Creation du nouveau formulaire</h1>
 
         <div class="card">
             <div class="card-body">
@@ -19,8 +19,8 @@
                         {% endfor %}
                     </ul>
                     
-                    <button type="button" class="btn btn-secondary mb-3" id="add-field">Ajouter nouveau champ</button>
-                    <button class="btn btn-primary">Sauvegarder</button>
+                    <button type="button" class="btn btn-secondary" id="add-field">Ajouter nouveau champ</button>
+                    <button class="btn btn-primary" id="save-button" disabled>Sauvegarder</button>
                 {{ form_end(form) }}
             </div>
         </div>
@@ -30,6 +30,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var addFieldButton = document.getElementById('add-field');
+        var saveButton = document.getElementById('save-button');
         var collectionHolder = document.querySelector('[data-collection-holder]');
 
         // Add a delete link to all of the existing field forms
@@ -55,6 +56,9 @@
 
             // Add a delete link to the new form
             addFieldFormDeleteLink(newFormLi);
+
+            // Enable the "Sauvegarder" button
+            saveButton.disabled = false;
         });
 
         function addFieldFormDeleteLink(fieldFormLi) {
@@ -67,6 +71,11 @@
                 e.preventDefault();
                 // Remove the li for the field form
                 fieldFormLi.remove();
+
+                // Disable "Sauvegarder" button if no fields are left
+                if (collectionHolder.children.length === 0) {
+                    saveButton.disabled = true;
+                }
             });
         }
     });

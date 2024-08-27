@@ -23,8 +23,9 @@ class FormType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-                'prototype' => true, // Allows a prototype to be used for JS cloning
-                'prototype_name' => '__name__', // Default prototype name
+                'prototype' => true,
+                'prototype_name' => '__name__', 
+                'label' => false
             ]);
     }
 

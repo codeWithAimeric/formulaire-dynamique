@@ -29,43 +29,43 @@ class FormController extends AbstractController
     #[Route('/', name: 'form_new')]
     public function new(Request $request,EntityManagerInterface $em, FormRepository $formRepository): Response
     {
-        $formEntity = new Form();
-        $form = $this->createForm(FormType::class, $formEntity);
+        $oFormEntity = new Form();
+        $oForm = $this->createForm(FormType::class, $oFormEntity);
 
-        $form->handleRequest($request);
+        $oForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($formEntity);
+        if ($oForm->isSubmitted() && $oForm->isValid()) {
+            $em->persist($oFormEntity);
             $em->flush();
 
-            return $this->redirectToRoute('form_show', ['id' => $formEntity->getId()]);
+            return $this->redirectToRoute('form_show', ['id' => $oFormEntity->getId()]);
         }
 
         return $this->render('form/new.html.twig', [
-            'form' => $form->createView(),
+            'form' => $oForm->createView(),
         ]);
     }
 
     #[Route('/form/{id}', name: 'form_show')]
     public function show(int $id, Request $request, FormRepository $formRepository, EntityManagerInterface $em): Response
     {
-        $formEntity = $formRepository->find($id);
+        $oFormEntity = $formRepository->find($id);
 
-        if (!$formEntity) {
+        if (!$oFormEntity) {
             throw $this->createNotFoundException('Form not found');
         }
 
         if ($request->isMethod('POST')) {
-            foreach ($formEntity->getFields() as $field) {
+            foreach ($oFormEntity->getFields() as $field) {
                 $fieldName = $field->getLabel();
                 $fieldValue = $request->request->get($fieldName);
 
-                $info = new Info();
-                $info->setFormId($formEntity->getId());
-                $info->setFieldLabel($fieldName);
-                $info->setFieldValue($fieldValue);
+                $oInfo = new Info();
+                $oInfo->setFormId($oFormEntity->getId());
+                $oInfo->setFieldLabel($fieldName);
+                $oInfo->setFieldValue($fieldValue);
 
-                $em->persist($info);
+                $em->persist($oInfo);
             }
 
             $em->flush();
@@ -74,7 +74,7 @@ class FormController extends AbstractController
         }
 
         return $this->render('form/show.html.twig', [
-            'form' => $formEntity,
+            'form' => $oFormEntity,
         ]);
     }
 
