@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container d-flex justify-content-center mt-4">
+    <div class="col-md-8">
+        <h1 class="text-center mb-4">{{ form.name }}</h1>
+
+        <form action="{{ path('form_show', {'id': form.id}) }}" method="post" class="card p-4">
+            {% for field in form.fields %}
+                <div class="mb-3">
+                    <label class="form-label">{{ field.label }}</label>
+                    {% if field.type == 'text' %}
+                        <input type="text" name="{{ field.label }}" class="form-control" />
+                    {% elseif field.type == 'textarea' %}
+                        <textarea name="{{ field.label }}" class="form-control"></textarea>
+                    {% elseif field.type == 'date' %}
+                        <input type="date" name="{{ field.label }}" class="form-control" />
+                    {% elseif field.type == 'number' %}
+                        <input type="number" name="{{ field.label }}" class="form-control" />
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

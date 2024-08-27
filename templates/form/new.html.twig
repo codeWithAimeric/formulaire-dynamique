@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="col-md-8">
+        <h1 class="text-center mb-4">Create New Form</h1>
+
+        <div class="card">
+            <div class="card-body">
+                {{ form_start(form) }}
+                    {{ form_row(form.name, {'attr': {'class': 'form-control mb-3'}}) }}
+                    
+                    <ul class="list-unstyled" data-collection-holder data-prototype="{{ form_widget(form.fields.vars.prototype)|e('html_attr') }}" data-index="{{ form.fields|length }}">
+                        {% for field in form.fields %}
+                            <li class="mb-2">
+                                {{ form_row(field, {'attr': {'class': 'form-control mb-2'}}) }}
+                                <button type="button" class="btn btn-danger btn-sm remove-field">Supprimer ce champ</button>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <button type="button" class="btn btn-secondary mb-3" id="add-field">Ajouter champ</button>
+                    <button class="btn btn-primary">Save Form</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var addFieldButton = document.getElementById('add-field');
+        var collectionHolder = document.querySelector('[data-collection-holder]');
+
+        // Add a delete link to all of the existing field forms
+        collectionHolder.querySelectorAll('li').forEach(function (field) {
+            addFieldFormDeleteLink(field);
+        });
+
+        addFieldButton.addEventListener('click', function () {
+            // Get the data-prototype explained earlier
+            var prototype = collectionHolder.dataset.prototype;
+            // Get the new index
+            var index = collectionHolder.dataset.index;
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+            // Increase the index with one for the next item
+            collectionHolder.dataset.index = parseInt(index) + 1;
+            // Display the form in the page in an li, before the "Add a field" link li element.
+            var newFormLi = document.createElement('li');
+            newFormLi.classList.add('mb-2');
+            newFormLi.innerHTML = newForm;
+            collectionHolder.appendChild(newFormLi);
+
+            // Add a delete link to the new form
+            addFieldFormDeleteLink(newFormLi);
+        });
+
+        function addFieldFormDeleteLink(fieldFormLi) {
+            var removeFormButton = document.createElement('button');
+            removeFormButton.className = 'btn btn-danger btn-sm';
+            removeFormButton.innerText = 'Supprimer ce champ';
+            fieldFormLi.appendChild(removeFormButton);
+
+            removeFormButton.addEventListener('click', function (e) {
+                e.preventDefault();
+                // Remove the li for the field form
+                fieldFormLi.remove();
+            });
+        }
+    });
+</script>
+{% endblock %}
